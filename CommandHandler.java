@@ -1,14 +1,26 @@
+import java.util.List;
+
 class CommandHandler
 {
-    public String cmd;
-    public String arg0;
-    public String arg1;
+    public String cmd = null;
+    public String arg0 = null;
+    public String arg1 = null;
+    private List<String> args = null;
+    private SimulatorInterface sim;
 
-    public CommandHandler(String cmd, String arg0, String arg1)
+    public CommandHandler(SimulatorInterface sim)
     {
-        this.cmd = cmd;
-        this.arg0 = arg0;
-        this.arg1 = arg1;
+        this.sim = sim;
+    }
+
+    public void setArgs(List<String> args){
+        this.args = args;
+        this.cmd = args.get(0);
+        if(args.size() >= 2)
+            arg0 = args.get(1);
+        if(args.size() >= 3)
+            arg1 = args.get(2);
+
     }
 
     public static void hCommand()
@@ -37,6 +49,7 @@ class CommandHandler
     public void sCommand()
     {
         int count  = 0;
+
         if(arg0 != null){
             while(count < Integer.parseInt(arg0))
             {
@@ -52,13 +65,13 @@ class CommandHandler
         }
         if(arg0 == null)
         {
+            count+=1;
             if(InstructionMemory.hasNextInstruction()){
-                    CommandRunner.step();
-                } else {
-                    cmd = "q";
-                }
-                count++;
+                CommandRunner.step();
                 System.out.println("\t\t1 instruction(s) executed");
+            } else {
+                cmd = "q";
+            }
 
         }
         
@@ -92,7 +105,7 @@ class CommandHandler
     }
 
 
-    public void HandleCommand(){
+    public void handleCommand(){
         if(cmd.charAt(0) == 'h')
         {
             hCommand();
@@ -119,7 +132,7 @@ class CommandHandler
         }
         if(cmd.charAt(0) == 'q')
         {
-            System.exit(0);   
+            sim.running = false;
         }
     }
 }

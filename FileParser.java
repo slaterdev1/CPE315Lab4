@@ -70,7 +70,7 @@ public class FileParser {
 
     private Scanner getScanner(String[] args){
         if(args.length == 0){
-            System.out.println("Usage: binaryConverter filename");
+            System.out.println("Usage: java lab3 filename.asm [scriptFile]");
             System.exit(-1);
         }
         File file = new File(args[0]);

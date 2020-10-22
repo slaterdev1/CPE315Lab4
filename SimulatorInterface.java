@@ -2,91 +2,61 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import static java.lang.System.exit;
+
 public class SimulatorInterface
 {
     private String[] args;
+    public boolean scriptMode = false;
+    public boolean running = true;
 
     public SimulatorInterface(String[] args){
         this.args = args;
     }
     
-    public void parseCommandUser()
+    public void simulate()
     {
         FileParser fp = new FileParser(args);
         fp.run();
-        Scanner cmd_o = new Scanner(System.in);
-        System.out.print("mips> ");
-        String cmdLine = cmd_o.nextLine();  // Read user input
-        String [] interactiveArgs = cmdLine.split(" ");
-        CommandHandler handler = new CommandHandler(interactiveArgs[0], null, null);
 
-    
-        if(interactiveArgs.length == 3)
-            handler = new CommandHandler(interactiveArgs[0], interactiveArgs[1],interactiveArgs[2]);
-        
-        if(interactiveArgs.length == 2)
-            handler = new CommandHandler(interactiveArgs[0], interactiveArgs[1],null);
+        Scanner cmd_o = getScanner(args);
+        if (cmd_o == null){
+            System.out.println("Usage: java lab3 filename.asm [scriptFile]");
+            exit(-1);
+        }
 
-        
-        while(!(handler.cmd).equals("q"))
+        String cmdLine;
+        List<String> stepArgs;
+        CommandHandler handler = new CommandHandler(this);
+
+        while(running) //running will be set to false by handler handling "q"
         {
-            handler.HandleCommand();
+            cmdLine = cmd_o.nextLine();
             System.out.print("mips> ");
-            cmdLine = cmd_o.nextLine();  // Read user input
-            interactiveArgs = cmdLine.split(" ");
-            handler.cmd = interactiveArgs[0];
-            if(interactiveArgs.length >= 2)
-                handler.arg0 = interactiveArgs[1];
- 
-            if(interactiveArgs.length == 3)
-                handler.arg1 = interactiveArgs[2];
-
+            if(scriptMode) System.out.println(cmdLine);
+            stepArgs = Arrays.asList(cmdLine.split(" "));
+            handler.setArgs(stepArgs);
+            handler.handleCommand();
         }
 
     }
-    public void parseCommandScript()
-    {
-        FileParser fp = new FileParser(args);
-        fp.run();
-        File file = new File(args[1]);
-        Scanner cmd_o = null;
-        try {
-            cmd_o = new Scanner(file);
-        } catch (FileNotFoundException e){
-            System.out.println("Error creating scanner: " + e);
-            System.exit(-1);
+
+    private Scanner getScanner(String[] args){
+        if(args.length == 1){
+            scriptMode = false;
+            return new Scanner(System.in);
         }
- 
-
-        System.out.print("mips> ");
-        String cmdLine = cmd_o.nextLine();  // Read user input
-        System.out.println(cmdLine);
-        String [] interactiveArgs = cmdLine.split(" ");
-        CommandHandler handler = new CommandHandler(interactiveArgs[0], null, null);
-
-    
-        if(interactiveArgs.length == 3)
-            handler = new CommandHandler(interactiveArgs[0], interactiveArgs[1],interactiveArgs[2]);
-        
-        if(interactiveArgs.length == 2)
-            handler = new CommandHandler(interactiveArgs[0], interactiveArgs[1],null);
-
-        
-        while(!(handler.cmd).equals("q"))
-        {
-            handler.HandleCommand();
-            System.out.print("mips> ");
-            cmdLine = cmd_o.nextLine();  // Read user input
-            System.out.println(cmdLine);
-            interactiveArgs = cmdLine.split(" ");
-            handler.cmd = interactiveArgs[0];
-            if(interactiveArgs.length >= 2)
-                handler.arg0 = interactiveArgs[1];
- 
-            if(interactiveArgs.length == 3)
-                handler.arg1 = interactiveArgs[2];
-
+        else if (args.length == 2) {
+            scriptMode = true;
+            try {
+                File file = new File(args[1]);
+                return new Scanner(file);
+            } catch (FileNotFoundException e){
+                System.out.println("Error creating scanner: " + e);
+                exit(-1);
+            }
         }
+        return null;
     }
 
 }
