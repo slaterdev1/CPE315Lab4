@@ -15,10 +15,10 @@ public class PipelineStages{
 
     }
 
-    public static void printStages()
+    public void printStages()
     {
         System.out.println("pc      if/id   id/exe  exe/mem mem/wb");
-        System.out.println(pc + "\t" + ifId + " " + idExe + " " + exeMem + " " + memWeb);
+        System.out.println(this.pc + "\t" + this.ifId + " " + this.idExe + " " + this.exeMem + " " + this.memWb);
     }
 
 }
