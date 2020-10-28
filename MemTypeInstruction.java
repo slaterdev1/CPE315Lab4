@@ -1,5 +1,5 @@
 
-public class MemTypeInstruction implements Instruction {
+public class MemTypeInstruction extends PipelineInstruction{
     /***
      * Data class for the Mem type instructions:
      * sw lw
@@ -18,7 +18,9 @@ public class MemTypeInstruction implements Instruction {
         String[] subTokens = tokens[1].split("\\(");
         offset = subTokens[0];
         rs = subTokens[1].substring(0, subTokens[1].length() - 1);
-
+        if(ins.equals("lw")){
+            this.destReg = rt;
+        }
     }
 
     public String toBinary(){
@@ -28,6 +30,17 @@ public class MemTypeInstruction implements Instruction {
         res.append(InstructionLookup.getReg(rt) + " ");
         res.append(DecimalToBinary.convertToBinary(offset, 16));
         return res.toString();
+    }
+
+
+    @Override
+    public String getIns() {
+        return ins;
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return register.equals(rs) || register.equals(rt);
     }
 
     @Override

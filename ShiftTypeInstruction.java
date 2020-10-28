@@ -1,5 +1,5 @@
 
-public class ShiftTypeInstruction implements Instruction {
+public class ShiftTypeInstruction extends PipelineInstruction{
     /***
      * Data class for the R type instructions:
      *  and, or, add, sub
@@ -31,6 +31,16 @@ public class ShiftTypeInstruction implements Instruction {
         res.append(DecimalToBinary.convertToBinary(shamt, 5));
         res.append(InstructionLookup.getFunc(ins) + " ");
         return res.toString();
+    }
+
+    @Override
+    public String getIns() {
+        return ins;
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return register.equals(rs) || register.equals(rt);
     }
 
     @Override

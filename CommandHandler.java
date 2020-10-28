@@ -7,9 +7,13 @@ class CommandHandler
     public String arg1 = null;
     private List<String> args = null;
     private SimulatorInterface sim;
+    private CommandRunner cr;
+    private boolean runningFlag = false;
+    private PipelineStages ps;
 
     public CommandHandler(SimulatorInterface sim)
     {
+        this.cr = new CommandRunner();
         this.sim = sim;
     }
 
@@ -54,21 +58,18 @@ class CommandHandler
             while(count < Integer.parseInt(arg0))
             {
                 if(InstructionMemory.hasNextInstruction()){
-                    CommandRunner.step();
+                    cr.step(true);
                 } else {
                     cmd = "q";
                 }
                 count++;
             }
-            System.out.println("\t\t" + arg0 + " instruction(s) executed");
-
         }
         if(arg0 == null)
         {
             count+=1;
             if(InstructionMemory.hasNextInstruction()){
-                CommandRunner.step();
-                System.out.println("\t\t1 instruction(s) executed");
+                cr.step(true);
             } else {
                 cmd = "q";
             }
@@ -81,7 +82,7 @@ class CommandHandler
     {
         try {
             while(InstructionMemory.hasNextInstruction()){
-                CommandRunner.step();
+                cr.step(false);
             }
         } catch (Exception e){
             System.out.println("caught exception: " + e);

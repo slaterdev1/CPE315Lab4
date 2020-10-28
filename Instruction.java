@@ -1,5 +1,10 @@
 
 public interface Instruction {
-    public String toBinary();
-    public void run();
+    String toBinary();
+    void run();
+    String getIns();
+    boolean dependsOn(String register);
+    String getDestReg();
+    boolean stallFlag = false;
+    Integer squashCount = 0;
 }

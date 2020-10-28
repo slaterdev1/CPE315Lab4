@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8b07e851-602f-44b5-a510-b9a84b6a0898" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1jDY6jwH0KrJoNpCrcpbS7JHxZo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="test1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="lab4" />
+      <module name="CPE315Lab4" />
+      <option name="PROGRAM_PARAMETERS" value="tst/tst1.asm tst/tst1Script" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8b07e851-602f-44b5-a510-b9a84b6a0898" name="Default Changelist" comment="" />
+      <created>1603339955321</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603339955321</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="149" y="211" width="1089" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603668047071">
+      <screen x="0" y="0" width="2752" height="1112" />
+    </state>
+    <state x="149" y="211" width="1089" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog/-2560.1163.1280.695/0.0.2752.1112@0.0.2752.1112" timestamp="1603668047071" />
+    <state x="501" y="262" key="#com.intellij.ide.util.MemberChooser" timestamp="1603576287097">
+      <screen x="0" y="0" width="2752" height="1112" />
+    </state>
+    <state x="501" y="262" key="#com.intellij.ide.util.MemberChooser/-2560.1163.1280.695/0.0.2752.1112@0.0.2752.1112" timestamp="1603576287097" />
+  </component>
+</project>

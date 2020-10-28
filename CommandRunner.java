@@ -1,9 +1,18 @@
 public class CommandRunner {
 
-    public static void step() {
+    private PipelineStages ps;
+
+    public CommandRunner() {
+        ps = new PipelineStages();
+    }
+
+    public void step(boolean printStages) {
         // also step through pipeline here
-        Instruction ins = InstructionMemory.getNextInstruction();
-        ins.run();
+        Instruction ins = ps.step();
+        if(printStages)
+            ps.printStages();
+        //ins.run();
+
     }
 
 }

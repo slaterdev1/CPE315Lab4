@@ -1,5 +1,5 @@
 
-public class JTypeInstruction implements Instruction {
+public class JTypeInstruction extends PipelineInstruction{
     /***
      * Data class for the j type instructions:
      * j jal
@@ -20,6 +20,16 @@ public class JTypeInstruction implements Instruction {
                 LabelTable.getLabel(target).toString(),
                 26));
         return res.toString();
+    }
+
+    @Override
+    public String getIns() {
+        return ins;
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return false;
     }
 
     @Override
