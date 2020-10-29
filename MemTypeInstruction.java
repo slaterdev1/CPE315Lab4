@@ -55,4 +55,6 @@ public class MemTypeInstruction implements Instruction {
                 ", offset='" + offset + '\'' +
                 '}';
     }
+    
+    public int getCPI(){}
 }

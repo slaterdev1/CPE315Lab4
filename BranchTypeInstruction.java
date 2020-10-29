@@ -11,6 +11,7 @@ public class BranchTypeInstruction implements Instruction {
     private String rt;
     private String label;
     private Integer offset;
+    private int CPI = 4;
 
     public BranchTypeInstruction(String ins, String insStr, Integer pcCount){
         this.ins = ins;
@@ -60,4 +61,6 @@ public class BranchTypeInstruction implements Instruction {
                 ", offset=" + offset +
                 '}';
     }
+
+    public int getCPI(){}
 }

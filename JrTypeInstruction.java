@@ -8,7 +8,8 @@ public class JrTypeInstruction implements Instruction {
 
     private String ins;
     private String rs;
-
+    private int CPI = 2;
+    
     public JrTypeInstruction(String ins, String insStr){
         this.ins = ins;
         rs = insStr.substring(ins.length());
@@ -35,5 +36,9 @@ public class JrTypeInstruction implements Instruction {
                 "ins='" + ins + '\'' +
                 ", rs='" + rs + '\'' +
                 '}';
+    }
+
+    public int getCPI(){
+        return this.CPI;
     }
 }

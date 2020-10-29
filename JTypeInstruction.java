@@ -7,6 +7,7 @@ public class JTypeInstruction implements Instruction {
 
     private String ins;
     private String target;
+    private int CPI = 2;
 
     public JTypeInstruction(String ins, String insStr){
         this.ins = ins;
@@ -41,5 +42,9 @@ public class JTypeInstruction implements Instruction {
                 "ins='" + ins + '\'' +
                 ", target='" + target + '\'' +
                 '}';
+    }
+
+    public int getCPI(){
+        return this.CPI;
     }
 }

@@ -10,6 +10,7 @@ public class ITypeInstruction implements Instruction {
     private String rs;
     private String rt;
     private String imm;
+    private int CPI = 1;
 
     public ITypeInstruction(String ins, String insStr){
         this.ins = ins;
@@ -44,5 +45,9 @@ public class ITypeInstruction implements Instruction {
                 ", rt='" + rt + '\'' +
                 ", imm='" + imm + '\'' +
                 '}';
+    }
+        
+    public int getCPI(){
+        return this.CPI;
     }
 }

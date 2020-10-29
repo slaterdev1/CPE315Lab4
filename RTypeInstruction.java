@@ -10,6 +10,7 @@ public class RTypeInstruction implements Instruction {
     private String rd;
     private String rs;
     private String rt;
+    private int CPI = 1;
 
     public RTypeInstruction(String ins, String insStr){
         this.ins = ins;
@@ -64,5 +65,10 @@ public class RTypeInstruction implements Instruction {
                 ", rs='" + rs + '\'' +
                 ", rt='" + rt + '\'' +
                 '}';
+    }
+
+    public int getCPI()
+    {
+        return this.CPI;
     }
 }

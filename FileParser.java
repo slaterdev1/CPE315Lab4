@@ -23,6 +23,8 @@ public class FileParser {
     public void run(){
         Scanner sc = getScanner(args);
         int pcCount = 0;
+        int cycles = 0;
+        int instructions = 0;
         // first pass
         while (sc.hasNextLine()){
             String rawLine = sc.nextLine();
@@ -40,6 +42,9 @@ public class FileParser {
             // get everything before the comment
             if(!isBlank(rawLine)){
                 Instruction ins = InstructionFactory.createInstruction(pcCount, rawLine);
+                instructions += 1;
+                cycles += ins.getCPI();
+                //if load is previous add 1
                 parsedInstructions.add(ins);
                 pcCount += 1;
             }

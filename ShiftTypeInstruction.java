@@ -11,6 +11,7 @@ public class ShiftTypeInstruction implements Instruction {
     private String rs;
     private String rt;
     private String shamt;
+    private int CPI = 1;
 
     public ShiftTypeInstruction(String ins, String insStr){
         this.ins = ins;
@@ -46,5 +47,10 @@ public class ShiftTypeInstruction implements Instruction {
                 ", rt='" + rt + '\'' +
                 ", shamt='" + shamt + '\'' +
                 '}';
+    }
+
+    public int getCPI()
+    {
+        return this.CPI;
     }
 }
