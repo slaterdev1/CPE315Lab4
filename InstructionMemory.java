@@ -18,10 +18,15 @@ public class InstructionMemory {
         return pcCount < instructions.size();
     }
 
-    public static Instruction getNextInstruction(){
+    public static Instruction getNextInstruction(PipelineStages ps){
         if(hasNextInstruction()){
             Instruction retIns = instructions.get(pcCount);
-            pcCount += 1;
+            if(ps.getStallFlag()) {
+                System.out.println("stalling at pcCount: " + pcCount);
+                ps.setStallFlag(false);
+            } else {
+                pcCount += 1;
+            }
             return retIns;
         } else return new InvalidInstruction("EOF");
     }

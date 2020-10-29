@@ -1,13 +1,23 @@
 
-public class InvalidInstruction implements Instruction{
+public class InvalidInstruction extends PipelineInstruction{
     private String ins;
     public InvalidInstruction(String ins){
         this.ins = ins;
     };
 
     @Override
+    public String getIns() {
+        return ins;
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return false;
+    }
+
+    @Override
     public void run() {
-        System.out.println("lol you're running an invalid instruction: " + ins);
+        return;
     }
 
     @Override

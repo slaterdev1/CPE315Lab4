@@ -1,5 +1,5 @@
 
-public class ITypeInstruction implements Instruction {
+public class ITypeInstruction extends PipelineInstruction{
     /***
      * Data class for the I type instructions:
      * addi
@@ -28,6 +28,16 @@ public class ITypeInstruction implements Instruction {
         res.append(InstructionLookup.getReg(rt) + " ");
         res.append(DecimalToBinary.convertToBinary(imm, 16));
         return res.toString();
+    }
+
+    @Override
+    public String getIns() {
+        return ins;
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return register.equals(rs) || register.equals(rt);
     }
 
     @Override

@@ -1,5 +1,5 @@
 
-public class BranchTypeInstruction implements Instruction {
+public class BranchTypeInstruction extends PipelineInstruction{
     /***
      * Data class for the Branch type instructions:
      * bne beq
@@ -21,6 +21,7 @@ public class BranchTypeInstruction implements Instruction {
         label = tokens[2];
         // add one to pcCount to point to instruction after this one
         offset = LabelTable.getLabel(label) - (pcCount + 1);
+        squashCount = 3;
     }
 
     public String toBinary(){
@@ -49,6 +50,16 @@ public class BranchTypeInstruction implements Instruction {
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return register.equals(rs) || register.equals(rt);
+    }
+
+    @Override
+    public String getIns() {
+        return ins;
     }
 
     @Override

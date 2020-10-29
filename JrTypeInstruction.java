@@ -1,5 +1,5 @@
 
-public class JrTypeInstruction implements Instruction {
+public class JrTypeInstruction extends PipelineInstruction{
     /***
      * Data class for the R type instructions:
      *  and, or, add, sub
@@ -22,6 +22,16 @@ public class JrTypeInstruction implements Instruction {
         res.append("000000000000000");
         res.append(InstructionLookup.getFunc(ins));
         return res.toString();
+    }
+
+    @Override
+    public String getIns() {
+        return ins;
+    }
+
+    @Override
+    public boolean dependsOn(String register) {
+        return register.equals(rs);
     }
 
     @Override
