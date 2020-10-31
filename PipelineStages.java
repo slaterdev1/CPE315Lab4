@@ -22,14 +22,15 @@ public class PipelineStages{
         pc = newpc;
     }
 
-    public Instruction step(){
+    public void step(){
         //check each stage for their special cases
         // at ex/mem, if load, add a stall instruction
         boolean tempStallFlag = false;
+        Instruction newIns = InstructionMemory.getInstruction(pc);
         for(int stage = MEM_WB; stage >= IF_ID; stage -= 1){
             switch (stage){
                 case MEM_WB:
-                    stages[MEM_WB] = stages[EXE_MEM];
+                    handleMEM_WB();
                     break;
                 case EXE_MEM:
                     handleEXE_MEM();
@@ -38,13 +39,25 @@ public class PipelineStages{
                     handleID_EXE();
                     break;
                 case IF_ID:
-                    return handleIF_ID();
+                    handleIF_ID(newIns);
+                    break;
                 default:
                     System.out.println("Stage is in a bad place");
                     break;
             }
         }
-        return new InvalidInstruction("NO_OP");
+    }
+
+    private void handleMEM_WB(){
+        stages[MEM_WB] = stages[EXE_MEM];
+        if(stages[MEM_WB].evaluateBranch()) {
+            stages[IF_ID] = new InvalidInstruction("squash");
+            stages[ID_EXE] = new InvalidInstruction("squash");
+            squashFlag = true;
+            int target = stages[MEM_WB].getTargetPcCount();
+            if(target == -1) System.out.println("trying to jump to a non-branch ins!");
+            pc = target;
+        }
     }
 
     private void handleEXE_MEM() {
@@ -52,6 +65,8 @@ public class PipelineStages{
         // id_exe comes around it'll be too late for the simulator
         // to keep its pcCount accurate
         // ... ^^ this was dumb, but I don't see a reason to change it
+        // ........ ^^ This was ALL dumb, but keeping it here through the refactor
+        //             for posterity
         stages[EXE_MEM] = stages[ID_EXE];
         boolean lwInID_EXE = stages[ID_EXE].getIns().equals("lw");
         boolean IFDependsOnIDLW = stages[IF_ID].dependsOn(stages[ID_EXE].getDestReg());
@@ -60,27 +75,32 @@ public class PipelineStages{
 
     private void handleID_EXE(){
 
-        if(stages[ID_EXE] instanceof JTypeInstruction
-                || stages[ID_EXE] instanceof JrTypeInstruction )
+        if(stages[IF_ID] instanceof JTypeInstruction
+                || stages[IF_ID] instanceof JrTypeInstruction ){
+
             squashFlag = true;
-        stages[ID_EXE].run();
-        stages[ID_EXE] = stallFlag ? new InvalidInstruction("stall") : stages[IF_ID];
+            pc = stages[IF_ID].getTargetPcCount();
+
+        }
+        if(stallFlag){
+            stages[ID_EXE] = new InvalidInstruction("stall");
+        } else {
+            stages[ID_EXE] = stages[IF_ID];
+            if(!squashFlag)
+                pc += 1;
+        }
 
     }
 
-    private Instruction handleIF_ID(){
+    private void handleIF_ID(Instruction newIns){
         // set it so that we have a no_op for the runner to run if we need to stall
-        Instruction newIns = new InvalidInstruction("NO_OP");
         if(!stallFlag){
-            newIns = InstructionMemory.getNextInstruction(this);
-            pc = InstructionMemory.pcCount;
             stages[IF_ID] = newIns;
         }
         if(squashFlag) {
-            newIns = new InvalidInstruction("squash");
-            stages[IF_ID] = newIns;
+            stages[IF_ID] = new InvalidInstruction("squash");
+            squashFlag = false;
         }
-        return newIns;
     }
 
     public void printStages()

@@ -22,15 +22,16 @@ public class InstructionMemory {
         return pcCount < instructions.size();
     }
 
-    public static Instruction getNextInstruction(PipelineStages ps){
+    public static Instruction getInstruction(int pc){
+        if(pc >= 0 && pc < instructions.size())
+            return instructions.get(pc);
+        else return new InvalidInstruction("EOF");
+    }
+
+    public static Instruction getNextInstruction(){
         if(hasNextInstruction()){
             Instruction retIns = instructions.get(pcCount);
-            if(ps.getStallFlag()) {
-                System.out.println("stalling at pcCount: " + pcCount);
-                ps.setStallFlag(false);
-            } else {
-                pcCount += 1;
-            }
+            pcCount += 1;
             return retIns;
         } else return new InvalidInstruction("EOF");
     }

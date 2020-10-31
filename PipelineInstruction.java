@@ -17,4 +17,14 @@ public abstract class PipelineInstruction implements Instruction{
     public int getCPI() {
         return 1;
     }
+
+    @Override
+    public int getTargetPcCount(){
+        return -1; //overriden by j and branch types
+    }
+
+    @Override
+    public Boolean evaluateBranch() {
+        return false;
+    }
 }

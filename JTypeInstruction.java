@@ -57,4 +57,9 @@ public class JTypeInstruction extends PipelineInstruction{
     public int getCPI(){
         return this.CPI;
     }
+
+    @Override
+    public int getTargetPcCount() {
+        return LabelTable.getLabel(target);
+    }
 }

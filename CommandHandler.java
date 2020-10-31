@@ -68,11 +68,7 @@ class CommandHandler
         if(arg0 == null)
         {
             count+=1;
-            if(InstructionMemory.hasNextInstruction()){
-                cr.step(true);
-            } else {
-                cmd = "q";
-            }
+            cr.step(true);
 
         }
         
@@ -87,9 +83,7 @@ class CommandHandler
         } catch (Exception e){
             System.out.println("caught exception: " + e);
         }
-        //MemoryFile.debugPrintMem();
-        //RegisterFile.printReg();
-        //cmd = "q";
+        // slater just gotta hit it w the cpi printouts ;P
     }
 
     public void mCommand()

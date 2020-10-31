@@ -8,4 +8,6 @@ public interface Instruction {
     String getDestReg();
     boolean stallFlag = false;
     Integer squashCount = 0;
+    int getTargetPcCount();
+    Boolean evaluateBranch();
 }

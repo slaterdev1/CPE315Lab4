@@ -12,6 +12,7 @@ public class BranchTypeInstruction extends PipelineInstruction{
     private String label;
     private Integer offset;
     private int CPI = 4;
+    private Boolean evalResult = false;
 
     public BranchTypeInstruction(String ins, String insStr, Integer pcCount){
         this.ins = ins;
@@ -40,12 +41,14 @@ public class BranchTypeInstruction extends PipelineInstruction{
         //System.out.println("Running branch instruction!");
         switch(ins){
             case "bne":
-                if(!RegisterFile.getReg(rs).equals(RegisterFile.getReg(rt))){
+                evalResult = !RegisterFile.getReg(rs).equals(RegisterFile.getReg(rt));
+                if(evalResult) {
                     InstructionMemory.pcCount += offset;
                 }
                 break;
             case "beq":
-                if(RegisterFile.getReg(rs).equals(RegisterFile.getReg(rt))) {
+                evalResult = RegisterFile.getReg(rs).equals(RegisterFile.getReg(rt));
+                if(evalResult) {
                     InstructionMemory.pcCount += offset;
                 }
                 break;
@@ -75,5 +78,15 @@ public class BranchTypeInstruction extends PipelineInstruction{
 
     public int getCPI(){
         return -1; //Slkater do plz :)
+    }
+
+    @Override
+    public int getTargetPcCount() {
+        return LabelTable.getLabel(label);
+    }
+
+    @Override
+    public Boolean evaluateBranch() {
+        return evalResult; //only an evaluated branch will eval true
     }
 }

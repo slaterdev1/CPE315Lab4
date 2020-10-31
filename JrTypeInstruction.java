@@ -51,4 +51,9 @@ public class JrTypeInstruction extends PipelineInstruction{
     public int getCPI(){
         return this.CPI;
     }
+
+    @Override
+    public int getTargetPcCount() {
+        return RegisterFile.getReg(rs);
+    }
 }

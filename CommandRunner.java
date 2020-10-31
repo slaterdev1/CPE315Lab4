@@ -8,10 +8,11 @@ public class CommandRunner {
 
     public void step(boolean printStages) {
         // also step through pipeline here
-        Instruction ins = ps.step();
+        Instruction ins = InstructionMemory.getNextInstruction();
+        ps.step();
         if(printStages)
             ps.printStages();
-        //ins.run();
+        ins.run();
 
     }
 
