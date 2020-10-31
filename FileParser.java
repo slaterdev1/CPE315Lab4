@@ -38,18 +38,22 @@ public class FileParser {
             }
         }
         pcCount = 0;
+        Instruction prev = null;
         for(String rawLine : rawInstructions){
             // get everything before the comment
             if(!isBlank(rawLine)){
+                if(prev != null  && prev instanceof MemTypeInstruction && prev.getIns() == "lw"){
+                    cycles += 1;
+                }
                 Instruction ins = InstructionFactory.createInstruction(pcCount, rawLine);
                 instructions += 1;
                 cycles += ins.getCPI();
-                //if load is previous add 1
                 parsedInstructions.add(ins);
                 pcCount += 1;
+                prev = ins;
             }
         }
-        InstructionMemory.loadInstructions(parsedInstructions);
+        InstructionMemory.loadInstructions(parsedInstructions, cycles);
     }
 
     private String processLabels(int pcCount, String inString){

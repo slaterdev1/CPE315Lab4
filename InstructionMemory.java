@@ -5,9 +5,13 @@ public class InstructionMemory {
 
     public static List<Instruction> instructions = new ArrayList<>();
     public static int pcCount = 0;
+    public static int totalCycles = 0;
 
-    public static void loadInstructions(List<Instruction> ins){
+    public static void loadInstructions(List<Instruction> ins, int cycles){
         instructions = ins;
+        totalCycles = cycles;
+        
+
     }
 
     public static int getTotalInstructions() {
