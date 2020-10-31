@@ -13,4 +13,8 @@ public abstract class PipelineInstruction implements Instruction{
         return destReg;
     }
 
+    @Override
+    public int getCPI() {
+        return 1;
+    }
 }

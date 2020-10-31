@@ -73,5 +73,7 @@ public class BranchTypeInstruction extends PipelineInstruction{
                 '}';
     }
 
-    public int getCPI(){}
+    public int getCPI(){
+        return -1; //Slkater do plz :)
+    }
 }

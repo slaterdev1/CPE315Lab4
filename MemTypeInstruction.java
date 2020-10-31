@@ -69,5 +69,7 @@ public class MemTypeInstruction extends PipelineInstruction{
                 '}';
     }
     
-    public int getCPI(){}
+    public int getCPI(){
+        return -1; //slater do plz :)
+    }
 }
