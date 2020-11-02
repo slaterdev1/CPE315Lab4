@@ -44,19 +44,23 @@ public class FileParser {
             if(!isBlank(rawLine)){
                 Instruction ins = InstructionFactory.createInstruction(pcCount, rawLine);
                 instructions += 1;
-                if(prev != null  && (prev.getIns()).equals("lw") && (ins.dependsOn(prev.getRS()) || ins.dependsOn(prev.getRS()))){
+                /*
+                if(prev != null
+                        && (prev.getIns()).equals("lw")
+                        && ins.dependsOn(prev.getRS())){
                     cycles += ins.getCPI() + 1;
                 }
                 else{
                     cycles += ins.getCPI();
                 }
+                 */
                 
                 
                 // System.out.println(ins.getIns() + " " + ins.getCPI());
                 // System.out.println("Cycles in file parser at" + cycles);
                 parsedInstructions.add(ins);
                 pcCount += 1;
-                prev = ins;
+                //k prev = ins;
             }
         }
         InstructionMemory.loadInstructions(parsedInstructions, cycles);

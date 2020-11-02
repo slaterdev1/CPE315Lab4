@@ -13,9 +13,10 @@ class CommandHandler
     public int cycles = 0;
     public int instructions = 0;
 
-    public CommandHandler(SimulatorInterface sim)
+    public CommandHandler(PipelineStages ps, SimulatorInterface sim)
     {
-        this.cr = new CommandRunner();
+        this.ps = ps;
+        this.cr = new CommandRunner(ps);
         this.sim = sim;
     }
 
@@ -80,13 +81,12 @@ class CommandHandler
     public void rCommand()
     {
         try {
-            while(InstructionMemory.hasNextInstruction()){
-                cr.step(false);
-
+            while(InstructionMemory.hasNextInstruction() || !ps.caughtUpWithSim()){
+                cr.step(true);
             }
-            int cycles = InstructionMemory.totalCycles;
-            int ins= InstructionMemory.pcCount;
-            double cpi = cycles/ins;
+            float cycles = ps.getCycles() + 4;
+            float ins= ps.getInstructions();
+            double cpi = cycles / ins;
             System.out.println("\nProgram complete");
             System.out.println("CPI = " + cpi + " Cycles = " + cycles + " Instructions = " + ins + "\n");
 

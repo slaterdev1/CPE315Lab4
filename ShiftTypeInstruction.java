@@ -41,7 +41,7 @@ public class ShiftTypeInstruction extends PipelineInstruction{
 
     @Override
     public boolean dependsOn(String register) {
-        return register.equals(rs) || register.equals(rt);
+        return register.equals(rt);
     }
 
     @Override

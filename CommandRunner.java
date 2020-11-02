@@ -2,8 +2,8 @@ public class CommandRunner {
 
     private PipelineStages ps;
 
-    public CommandRunner() {
-        ps = new PipelineStages();
+    public CommandRunner(PipelineStages ps) {
+        this.ps = ps;
     }
 
     public void step(boolean printStages) {

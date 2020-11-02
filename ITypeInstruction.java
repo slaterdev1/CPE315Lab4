@@ -37,7 +37,7 @@ public class ITypeInstruction extends PipelineInstruction{
 
     @Override
     public boolean dependsOn(String register) {
-        return register.equals(rs) || register.equals(rt);
+        return register.equals(rs);
     }
 
     @Override

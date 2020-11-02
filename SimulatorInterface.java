@@ -27,7 +27,7 @@ public class SimulatorInterface
 
         String cmdLine;
         List<String> stepArgs;
-        CommandHandler handler = new CommandHandler(this);
+        CommandHandler handler = new CommandHandler(new PipelineStages(), this);
 
         while(running) //running will be set to false by handler handling "q"
         {

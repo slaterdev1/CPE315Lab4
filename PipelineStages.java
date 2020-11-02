@@ -9,6 +9,9 @@ public class PipelineStages{
     private final int ID_EXE = 1;
     private final int EXE_MEM = 2;
     private final int MEM_WB = 3;
+    private int cycles = 0;
+    private int instructions = 0;
+
 
 
     public PipelineStages(){
@@ -53,6 +56,7 @@ public class PipelineStages{
         if(stages[MEM_WB].evaluateBranch()) {
             stages[IF_ID] = new InvalidInstruction("squash");
             stages[ID_EXE] = new InvalidInstruction("squash");
+            cycles += 2;
             squashFlag = true;
             int target = stages[MEM_WB].getTargetPcCount();
             if(target == -1) System.out.println("trying to jump to a non-branch ins!");
@@ -69,7 +73,7 @@ public class PipelineStages{
         //             for posterity
         stages[EXE_MEM] = stages[ID_EXE];
         boolean lwInID_EXE = stages[ID_EXE].getIns().equals("lw");
-        boolean IFDependsOnIDLW = stages[IF_ID].dependsOn(stages[ID_EXE].getDestReg());
+        boolean IFDependsOnIDLW = stages[IF_ID].dependsOn(stages[ID_EXE].getRT());
         stallFlag = lwInID_EXE && IFDependsOnIDLW;
     }
 
@@ -93,14 +97,22 @@ public class PipelineStages{
     }
 
     private void handleIF_ID(Instruction newIns){
-        // set it so that we have a no_op for the runner to run if we need to stall
         if(!stallFlag){
             stages[IF_ID] = newIns;
+            instructions += 1;
+        } else {
+            cycles += 1;
         }
         if(squashFlag) {
             stages[IF_ID] = new InvalidInstruction("squash");
+            cycles += 1;
             squashFlag = false;
         }
+        cycles += 1;
+    }
+
+    public boolean caughtUpWithSim(){
+        return InstructionMemory.pcCount == pc;
     }
 
     public void printStages()
@@ -124,5 +136,13 @@ public class PipelineStages{
 
     public void setStallFlag(boolean stallFlag) {
         this.stallFlag = stallFlag;
+    }
+
+    public int getCycles() {
+        return cycles;
+    }
+
+    public int getInstructions() {
+        return instructions;
     }
 }
