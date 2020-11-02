@@ -12,6 +12,7 @@ public class CommandRunner {
         ps.step();
         if(printStages)
             ps.printStages();
+        
         ins.run();
 
     }

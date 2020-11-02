@@ -89,4 +89,12 @@ public class BranchTypeInstruction extends PipelineInstruction{
     public Boolean evaluateBranch() {
         return evalResult; //only an evaluated branch will eval true
     }
+
+    public String getRS(){
+        return this.rs;
+    }
+
+    public String getRT(){
+        return this.rt;
+    }
 }

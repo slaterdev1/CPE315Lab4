@@ -24,4 +24,12 @@ public class InvalidInstruction extends PipelineInstruction{
     public String toBinary() {
         return "invalid instruction: " + ins;
     }
+
+    public String getRS(){
+        return "Error shouldn't get here";
+    }
+
+    public String getRT(){
+        return "Error shouldn't get here";
+    }
 }

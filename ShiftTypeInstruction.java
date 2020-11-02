@@ -63,4 +63,12 @@ public class ShiftTypeInstruction extends PipelineInstruction{
     {
         return this.CPI;
     }
+
+    public String getRS(){
+        return this.rs;
+    }
+
+    public String getRT(){
+        return this.rt;
+    }
 }

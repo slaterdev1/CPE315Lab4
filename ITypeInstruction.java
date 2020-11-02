@@ -60,4 +60,12 @@ public class ITypeInstruction extends PipelineInstruction{
     public int getCPI(){
         return this.CPI;
     }
+
+    public String getRS(){
+        return this.rs;
+    }
+
+    public String getRT(){
+        return this.rt;
+    }
 }

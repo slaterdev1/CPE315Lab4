@@ -62,4 +62,12 @@ public class JTypeInstruction extends PipelineInstruction{
     public int getTargetPcCount() {
         return LabelTable.getLabel(target);
     }
+
+    public String getRS(){
+        return "Error shouldn't get here";
+    }
+
+    public String getRT(){
+        return "Shouldn't get here";
+    }
 }

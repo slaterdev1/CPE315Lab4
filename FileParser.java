@@ -23,7 +23,7 @@ public class FileParser {
     public void run(){
         Scanner sc = getScanner(args);
         int pcCount = 0;
-        int cycles = 0;
+        int cycles = 1;
         int instructions = 0;
         // first pass
         while (sc.hasNextLine()){
@@ -42,12 +42,18 @@ public class FileParser {
         for(String rawLine : rawInstructions){
             // get everything before the comment
             if(!isBlank(rawLine)){
-                if(prev != null  && prev instanceof MemTypeInstruction && prev.getIns() == "lw"){
-                    cycles += 1;
-                }
                 Instruction ins = InstructionFactory.createInstruction(pcCount, rawLine);
                 instructions += 1;
-                cycles += ins.getCPI();
+                if(prev != null  && (prev.getIns()).equals("lw") && (ins.dependsOn(prev.getRS()) || ins.dependsOn(prev.getRS()))){
+                    cycles += ins.getCPI() + 1;
+                }
+                else{
+                    cycles += ins.getCPI();
+                }
+                
+                
+                // System.out.println(ins.getIns() + " " + ins.getCPI());
+                // System.out.println("Cycles in file parser at" + cycles);
                 parsedInstructions.add(ins);
                 pcCount += 1;
                 prev = ins;

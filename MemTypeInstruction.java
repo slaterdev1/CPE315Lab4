@@ -59,6 +59,14 @@ public class MemTypeInstruction extends PipelineInstruction{
         }
     }
 
+    public String getRS(){
+        return this.rs;
+    }
+
+    public String getRT(){
+        return this.rt;
+    }
+
     @Override
     public String toString() {
         return "MemTypeInstruction{" +
@@ -70,6 +78,6 @@ public class MemTypeInstruction extends PipelineInstruction{
     }
     
     public int getCPI(){
-        return -1; //slater do plz :)
+        return 1; //slater do plz :)
     }
 }

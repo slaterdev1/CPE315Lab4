@@ -10,6 +10,8 @@ class CommandHandler
     private CommandRunner cr;
     private boolean runningFlag = false;
     private PipelineStages ps;
+    public int cycles = 0;
+    public int instructions = 0;
 
     public CommandHandler(SimulatorInterface sim)
     {
@@ -63,6 +65,7 @@ class CommandHandler
                     cmd = "q";
                 }
                 count++;
+
             }
         }
         if(arg0 == null)
@@ -79,7 +82,14 @@ class CommandHandler
         try {
             while(InstructionMemory.hasNextInstruction()){
                 cr.step(false);
+
             }
+            int cycles = InstructionMemory.totalCycles;
+            int ins= InstructionMemory.pcCount;
+            double cpi = cycles/ins;
+            System.out.println("\nProgram complete");
+            System.out.println("CPI = " + cpi + " Cycles = " + cycles + " Instructions = " + ins + "\n");
+
         } catch (Exception e){
             System.out.println("caught exception: " + e);
         }

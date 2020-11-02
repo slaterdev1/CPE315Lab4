@@ -56,4 +56,12 @@ public class JrTypeInstruction extends PipelineInstruction{
     public int getTargetPcCount() {
         return RegisterFile.getReg(rs);
     }
+
+    public String getRS(){
+        return this.rs;
+    }
+
+    public String getRT(){
+        return "Shouldn't get here";
+    }
 }
