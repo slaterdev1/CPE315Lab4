@@ -31,8 +31,8 @@ public class SimulatorInterface
 
         while(running) //running will be set to false by handler handling "q"
         {
-            cmdLine = cmd_o.nextLine();
             System.out.print("mips> ");
+            cmdLine = cmd_o.nextLine();
             if(scriptMode) System.out.println(cmdLine);
             stepArgs = Arrays.asList(cmdLine.split(" "));
             handler.setArgs(stepArgs);

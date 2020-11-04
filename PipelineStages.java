@@ -56,7 +56,6 @@ public class PipelineStages{
         if(stages[MEM_WB].evaluateBranch()) {
             stages[IF_ID] = new InvalidInstruction("squash");
             stages[ID_EXE] = new InvalidInstruction("squash");
-            //cycles += 2;
             instructions -= 2;
             squashFlag = true;
             int target = stages[MEM_WB].getTargetPcCount();
@@ -98,24 +97,18 @@ public class PipelineStages{
     }
 
     private void handleIF_ID(Instruction newIns){
-        if(!stallFlag){
-            stages[IF_ID] = newIns;
-            System.out.println("Adding ins " + newIns.getIns() + " ins count " + instructions);
-            instructions += 1;
-            
-        } else {
-            //cycles += 1;
-        }
         if(squashFlag) {
             stages[IF_ID] = new InvalidInstruction("squash");
-            //cycles += 1;
             squashFlag = false;
-            instructions -= 1;
+        }
+        else if(!stallFlag){
+            stages[IF_ID] = newIns;
+            System.out.println("Got New " + newIns.getIns());
+            instructions += 1;
         }
         cycles += 1;
-        System.out.println("Adding cycles " + cycles);
-       
-
+        System.out.println("Cycles Now: " + cycles);
+        System.out.println("Instructions Now: " + instructions);
     }
 
     public boolean caughtUpWithSim(){
