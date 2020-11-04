@@ -1,5 +1,6 @@
 import java.util.List;
 
+
 class CommandHandler
 {
     public String cmd = null;
@@ -53,6 +54,11 @@ class CommandHandler
         RegisterFile.printReg();
     }
 
+    public void pCommand()
+    {
+        ps.printStages();
+    }
+
     public void sCommand()
     {
         int count  = 0;
@@ -82,13 +88,14 @@ class CommandHandler
     {
         try {
             while(InstructionMemory.hasNextInstruction() || !ps.caughtUpWithSim()){
-                cr.step(true);
+                cr.step(false);
             }
-            float cycles = ps.getCycles() + 4;
-            float ins= ps.getInstructions();
+            double cycles = ps.getCycles() + 4;
+            double ins = ps.getInstructions();
             double cpi = cycles / ins;
+            String printCycle = String.format("%.3f", cpi);
             System.out.println("\nProgram complete");
-            System.out.println("CPI = " + cpi + " Cycles = " + cycles + " Instructions = " + ins + "\n");
+            System.out.println("CPI = " + printCycle + " Cycles = " + ((int)cycles) + " Instructions = " + ((int)ins) + "\n");
 
         } catch (Exception e){
             System.out.println("caught exception: " + e);
@@ -100,6 +107,8 @@ class CommandHandler
     {
         MemoryFile.printMem(Integer.parseInt(arg0),Integer.parseInt(arg1));
     }
+
+
  
     public void cCommand()
     {
@@ -134,6 +143,10 @@ class CommandHandler
         if(cmd.charAt(0) == 'c')
         {
             cCommand();
+        }
+        if(cmd.charAt(0) == 'p')
+        {
+            pCommand();
         }
         if(cmd.charAt(0) == 'q')
         {
