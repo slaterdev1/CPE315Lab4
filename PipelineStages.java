@@ -56,7 +56,12 @@ public class PipelineStages{
         if(stages[MEM_WB].evaluateBranch()) {
             stages[IF_ID] = new InvalidInstruction("squash");
             stages[ID_EXE] = new InvalidInstruction("squash");
+            //System.out.println("\n\nSquashing instructions");
+            //System.out.println("Instructions Was: " + instructions);
             instructions -= 2;
+            //System.out.println("Squashing instructions");
+            //System.out.println("Instructions Now: " + instructions + "\n\n");
+            //cycles += 2;
             squashFlag = true;
             int target = stages[MEM_WB].getTargetPcCount();
             if(target == -1) System.out.println("trying to jump to a non-branch ins!");
@@ -103,12 +108,12 @@ public class PipelineStages{
         }
         else if(!stallFlag){
             stages[IF_ID] = newIns;
-            System.out.println("Got New " + newIns.getIns());
+            //System.out.println("\n\nGot New " + newIns.getIns());
             instructions += 1;
         }
         cycles += 1;
-        System.out.println("Cycles Now: " + cycles);
-        System.out.println("Instructions Now: " + instructions);
+        //System.out.println("Cycles Now: " + cycles);
+        //System.out.println("Instructions Now: " + instructions + "\n\n");
     }
 
     public boolean caughtUpWithSim(){
